@@ -1,9 +1,0 @@
-{"level":"debug","ts":"2025-08-10 22:21:45","caller":"gophermart/main.go:31","msg":"Error loading .env file","error":"open ./cmd/gophermart/.env: no such file or directory"}
-{"level":"info","ts":"2025-08-10 22:21:45","caller":"gophermart/main.go:58","msg":"Running server{address 15 0 localhost:8080 <nil>}"}
-{"level":"debug","ts":"2025-08-10 22:22:06","caller":"gophermart/main.go:31","msg":"Error loading .env file","error":"open ./cmd/gophermart/.env: no such file or directory"}
-{"level":"info","ts":"2025-08-10 22:22:06","caller":"gophermart/main.go:58","msg":"Running server{address 15 0 localhost:8080 <nil>}"}
-{"level":"debug","ts":"2025-08-10 22:22:46","caller":"gophermart/main.go:31","msg":"Error loading .env file","error":"open ./cmd/gophermart/.env: no such file or directory"}
-{"level":"info","ts":"2025-08-10 22:22:46","caller":"gophermart/main.go:58","msg":"Running server{address 15 0 localhost:8080 <nil>}"}
-{"level":"debug","ts":"2025-08-10 22:26:43","caller":"gophermart/main.go:31","msg":"Error loading .env file","error":"open ./cmd/gophermart/.env: no such file or directory"}
-{"level":"debug","ts":"2025-08-10 22:26:43","caller":"config/config.go:34","msg":"Config","Address":{"Host":"localhost","Port":8080}}
-{"level":"info","ts":"2025-08-10 22:26:43","caller":"gophermart/main.go:58","msg":"Running server{address 15 0 localhost:8080 <nil>}"}
