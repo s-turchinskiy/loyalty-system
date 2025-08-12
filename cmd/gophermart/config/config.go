@@ -8,31 +8,38 @@ import (
 	"os"
 )
 
-var Config Settings
-
 type Settings struct {
-	Address netAddress
+	Address  netAddress
+	Database database
 }
 
-func SetConfig() error {
+func GetConfig() (*Settings, error) {
 
-	Config = Settings{
+	config := &Settings{
 		Address: netAddress{
 			Host: "localhost", Port: 8080},
 	}
 
-	flag.Var(&Config.Address, "a", "Net address host:port")
+	flag.Var(&config.Address, "a", "Net address host:port")
+	flag.Var(&config.Database, "d", "path to database")
 	flag.Parse()
 
 	if envAddr := os.Getenv("ADDRESS"); envAddr != "" {
-		err := Config.Address.Set(envAddr)
+		err := config.Address.Set(envAddr)
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
 
-	logger.LogNoSugar.Debug("Config", zap.Inline(Config))
-	return nil
+	if DatabaseDsn := os.Getenv("DATABASE_DSN"); DatabaseDsn != "" {
+		err := config.Database.Set(DatabaseDsn)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	logger.LogNoSugar.Info("Config", zap.Inline(config))
+	return config, nil
 }
 
 func (s Settings) MarshalLogObject(encoder zapcore.ObjectEncoder) error {

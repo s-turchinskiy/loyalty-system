@@ -22,22 +22,23 @@ func init() {
 
 func main() {
 
-	ctx := context.Background()
-	metricsHandler := handlers.NewHandler(ctx)
-	errors := make(chan error)
-
 	err := godotenv.Load("./cmd/gophermart/.env")
 	if err != nil {
 		logger.Log.Debugw("Error loading .env file", "error", err.Error())
 	}
 
-	if err := config.SetConfig(); err != nil {
-		//logger.Log.Errorw("Get Settings error", "error", err.Error())
+	config, err := config.GetConfig()
+	if err != nil {
+		logger.Log.Errorw("Get Settings error", "error", err.Error())
 		log.Fatal(err)
 	}
 
+	ctx := context.Background()
+	handler := handlers.NewHandler(ctx, config.Database.String(), config.Database.DBName)
+	errors := make(chan error)
+
 	go func() {
-		err := run(metricsHandler)
+		err := run(handler, config.Address.String())
 		if err != nil {
 
 			logger.Log.Errorw("Server startup error", "error", err.Error())
@@ -52,10 +53,10 @@ func main() {
 
 }
 
-func run(h *handlers.Handler) error {
+func run(h *handlers.Handler, addr string) error {
 
 	router := internal.Router(h)
-	logger.Log.Info("Running server", zap.String("address", config.Config.Address.String()))
-	return http.ListenAndServe(config.Config.Address.String(), router)
+	logger.Log.Info("Running server", zap.String("address", addr))
+	return http.ListenAndServe(addr, router)
 
 }
