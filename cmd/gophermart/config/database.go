@@ -1,11 +1,7 @@
 package config
 
 import (
-	"errors"
-	"fmt"
-	"github.com/s-turchinskiy/loyalty-system/internal/middleware/logger"
 	"go.uber.org/zap/zapcore"
-	"strings"
 )
 
 type database struct {
@@ -13,6 +9,7 @@ type database struct {
 	DBName   string
 	Login    string
 	Password string
+	RawPath  string
 }
 
 func (d *database) MarshalLogObject(encoder zapcore.ObjectEncoder) error {
@@ -26,13 +23,17 @@ func (d *database) MarshalLogObject(encoder zapcore.ObjectEncoder) error {
 }
 
 func (d *database) String() string {
-	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable",
-		d.Host, d.Login, d.Password, d.DBName)
+	/*return fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable",
+	d.Host, d.Login, d.Password, d.DBName)*/
+
+	return d.RawPath
 }
 
 func (d *database) Set(s string) error {
 
-	logger.Log.Debug("database path", "\""+s+"\"")
+	d.RawPath = s
+
+	/*logger.Log.Debug("database path", "\""+s+"\"")
 
 	s = strings.Replace(s, "://", " ", 1)
 	s = strings.Replace(s, ":", " ", 1)
@@ -50,7 +51,7 @@ func (d *database) Set(s string) error {
 	d.Host = hp[3]
 	d.Login = hp[1]
 	d.Password = hp[2]
-	d.DBName = hp[5]
+	d.DBName = hp[5]*/
 
 	return nil
 }
