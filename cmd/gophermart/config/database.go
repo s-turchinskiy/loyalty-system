@@ -32,6 +32,7 @@ func (d *database) String() string {
 func (d *database) Set(s string) error {
 
 	d.RawPath = s
+	d.DBName = "loyaltysystem"
 
 	/*logger.Log.Debug("database path", "\""+s+"\"")
 
