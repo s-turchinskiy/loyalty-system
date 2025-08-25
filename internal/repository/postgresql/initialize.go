@@ -13,7 +13,6 @@ import (
 	"github.com/s-turchinskiy/loyalty-system/internal/common"
 	"github.com/s-turchinskiy/loyalty-system/internal/middleware/logger"
 	"github.com/s-turchinskiy/loyalty-system/internal/repository"
-	"strings"
 	"time"
 )
 
@@ -50,7 +49,7 @@ func NewPostgresStorage(ctx context.Context, addr, schemaName string) (repositor
 	if err != nil {
 		return nil, common.WrapError(err)
 	}
-	
+
 	driver, err := postgres.WithInstance(db.DB, &postgres.Config{SchemaName: schemaName})
 	if err != nil {
 		return nil, common.WrapError(err)
@@ -66,23 +65,4 @@ func NewPostgresStorage(ctx context.Context, addr, schemaName string) (repositor
 
 	return p, nil
 
-}
-
-func (p *PostgreSQL) loggingData(ctx context.Context, title, query string, args ...interface{}) error {
-
-	var data []string
-
-	err := p.db.SelectContext(
-		ctx,
-		&data,
-		query,
-		args...)
-
-	if err != nil {
-		return err
-	}
-
-	logger.Log.Debugw(title, "values", strings.Join(data, ","))
-
-	return nil
 }
