@@ -5,8 +5,19 @@ import (
 	"github.com/s-turchinskiy/loyalty-system/internal/middleware/logger"
 	"github.com/s-turchinskiy/loyalty-system/internal/repository/postgresql"
 	"github.com/s-turchinskiy/loyalty-system/internal/service"
+	"go.uber.org/zap"
 	"log"
+	"net/http"
 	"time"
+)
+
+const (
+	ContentTypeTextHTML         = "text/html; charset=utf-8"
+	ContentTypeTextPlain        = "text/plain"
+	ContentTypeTextPlainCharset = "text/plain; charset=utf-8"
+	ContentTypeApplicationJson  = "application/json"
+
+	TextErrorGettingData = "error getting data"
 )
 
 type Handler struct {
@@ -29,4 +40,18 @@ func NewHandler(ctx context.Context, addr, schemaName string) *Handler {
 	return &Handler{
 
 		Service: service.New(p, retryStrategy)}
+}
+
+func errorGettingData(w http.ResponseWriter, err error) {
+	logger.Log.Infow(TextErrorGettingData, zap.Error(err))
+	w.Header().Set("Content-Type", ContentTypeTextPlainCharset)
+	w.WriteHeader(http.StatusBadRequest)
+	w.Write([]byte(err.Error()))
+}
+
+func internalError(w http.ResponseWriter, err error) {
+	logger.Log.Infow("internal error", zap.Error(err))
+	w.Header().Set("Content-Type", ContentTypeTextPlainCharset)
+	w.WriteHeader(http.StatusInternalServerError)
+	w.Write([]byte(err.Error()))
 }

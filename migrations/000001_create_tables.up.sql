@@ -10,14 +10,24 @@ INSERT INTO loyaltysystem.statuses (status) VALUES ('PROCESSED');
 
 CREATE TABLE IF NOT EXISTS loyaltysystem.ordersStatuses (
     id SERIAL PRIMARY KEY,
-    orderId TEXT NOT NULL UNIQUE,
-    statusId INTEGER NOT NULL REFERENCES loyaltysystem.statuses (Id),
-    uploadedAt timestamptz DEFAULT CURRENT_TIMESTAMP
+    order_id TEXT NOT NULL UNIQUE,
+    status_id INTEGER NOT NULL REFERENCES loyaltysystem.statuses (id),
+    uploaded_at timestamptz DEFAULT CURRENT_TIMESTAMP
     );
+
+CREATE TABLE IF NOT EXISTS loyaltysystem.operations (
+    id SERIAL PRIMARY KEY,
+    operation TEXT NOT NULL UNIQUE
+);
+
+INSERT INTO loyaltysystem.operations (operation) VALUES ('REFILL');
+INSERT INTO loyaltysystem.operations (operation) VALUES ('WITHDRAWAL');
+
 
 CREATE TABLE IF NOT EXISTS loyaltysystem.balances (
     id SERIAL PRIMARY KEY,
-    orderId TEXT NOT NULL UNIQUE,
-    uploadedAt timestamptz DEFAULT CURRENT_TIMESTAMP,
+    operation_id INTEGER NOT NULL REFERENCES loyaltysystem.operations (id),
+    order_id TEXT NOT NULL UNIQUE,
+    uploaded_at timestamptz DEFAULT CURRENT_TIMESTAMP,
     sum numeric(15,2) NOT NULL
     );
