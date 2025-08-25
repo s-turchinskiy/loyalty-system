@@ -52,7 +52,10 @@ func NewPostgresStorage(ctx context.Context, addr, schemaName string) (repositor
 	}
 
 	_, err = p.db.ExecContext(ctx, fmt.Sprintf(`CREATE SCHEMA IF NOT EXISTS %s`, schemaName))
-	
+	if err != nil {
+		return nil, common.WrapError(err)
+	}
+
 	m, err := migrate.NewWithDatabaseInstance("file://migrations", "postgres", driver)
 	if err != nil {
 		return nil, err
