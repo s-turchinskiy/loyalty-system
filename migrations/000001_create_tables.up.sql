@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS loyaltysystem
+
 CREATE TABLE IF NOT EXISTS loyaltysystem.statuses (
     id SERIAL PRIMARY KEY,
     status TEXT NOT NULL UNIQUE
