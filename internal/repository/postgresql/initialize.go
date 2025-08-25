@@ -46,12 +46,12 @@ func NewPostgresStorage(ctx context.Context, addr, schemaName string) (repositor
 
 	p := &PostgreSQL{db: db, pool: pool}
 
-	driver, err := postgres.WithInstance(db.DB, &postgres.Config{SchemaName: schemaName})
+	_, err = p.db.ExecContext(ctx, fmt.Sprintf(`CREATE SCHEMA IF NOT EXISTS %s`, schemaName))
 	if err != nil {
 		return nil, common.WrapError(err)
 	}
-
-	_, err = p.db.ExecContext(ctx, fmt.Sprintf(`CREATE SCHEMA IF NOT EXISTS %s`, schemaName))
+	
+	driver, err := postgres.WithInstance(db.DB, &postgres.Config{SchemaName: schemaName})
 	if err != nil {
 		return nil, common.WrapError(err)
 	}
