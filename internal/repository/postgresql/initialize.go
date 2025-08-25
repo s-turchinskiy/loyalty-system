@@ -68,12 +68,6 @@ func NewPostgresStorage(ctx context.Context, addr, schemaName string) (repositor
 
 }
 
-func (p *PostgreSQL) CreateTable(ctx context.Context, tableName, query string) error {
-
-	_, err := p.db.ExecContext(ctx, query)
-	return err
-}
-
 func (p *PostgreSQL) loggingData(ctx context.Context, title, query string, args ...interface{}) error {
 
 	var data []string
