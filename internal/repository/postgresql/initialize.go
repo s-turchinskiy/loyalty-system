@@ -3,6 +3,7 @@ package postgresql
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -50,6 +51,8 @@ func NewPostgresStorage(ctx context.Context, addr, schemaName string) (repositor
 		return nil, common.WrapError(err)
 	}
 
+	_, err = p.db.ExecContext(ctx, fmt.Sprintf(`CREATE SCHEMA IF NOT EXISTS %s`, schemaName))
+	
 	m, err := migrate.NewWithDatabaseInstance("file://migrations", "postgres", driver)
 	if err != nil {
 		return nil, err
