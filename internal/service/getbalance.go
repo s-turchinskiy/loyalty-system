@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func (s *Service) GetBalance(ctx context.Context, userId string) (*models.Balance, error) {
+func (s *Service) GetBalance(ctx context.Context, userID string) (*models.Balance, error) {
 
 	s.mutex.Lock()
 	defer s.mutex.Unlock()

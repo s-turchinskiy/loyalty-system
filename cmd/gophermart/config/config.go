@@ -14,7 +14,7 @@ type Settings struct {
 }
 
 func GetConfig() (*Settings, error) {
-
+	
 	config := &Settings{
 		Address: netAddress{
 			Host: "localhost", Port: 8080},

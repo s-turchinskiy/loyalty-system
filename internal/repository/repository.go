@@ -7,9 +7,9 @@ import (
 
 type Repository interface {
 	Ping(ctx context.Context) ([]byte, error)
-	NewOrder(ctx context.Context, orderId string) error
-	GetOrders(ctx context.Context, userId string) ([]models.Order, error)
-	GetBalance(ctx context.Context, userId string) (*models.Balance, error)
-	NewWithdraw(ctx context.Context, userId string, newWithdraw models.NewWithdraw) error
-	GetWithdrawals(ctx context.Context, userId string) ([]models.Withdrawal, error)
+	NewOrder(ctx context.Context, orderID string) error
+	GetOrders(ctx context.Context, userID string) ([]models.Order, error)
+	GetBalance(ctx context.Context, userID string) (*models.Balance, error)
+	NewWithdraw(ctx context.Context, userID string, newWithdraw models.NewWithdraw) error
+	GetWithdrawals(ctx context.Context, userID string) ([]models.Withdrawal, error)
 }

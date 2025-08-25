@@ -6,7 +6,7 @@ import (
 	"github.com/s-turchinskiy/loyalty-system/internal/models"
 )
 
-func (p *PostgreSQL) GetWithdrawals(ctx context.Context, userId string) ([]models.Withdrawal, error) {
+func (p *PostgreSQL) GetWithdrawals(ctx context.Context, userID string) ([]models.Withdrawal, error) {
 
 	request, err := getRequest("get_withdrawals.sql")
 	if err != nil {

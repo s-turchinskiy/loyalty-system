@@ -12,11 +12,11 @@ import (
 )
 
 type Updater interface {
-	NewOrder(ctx context.Context, orderId string) error
-	GetOrders(ctx context.Context, userId string) (models.Orders, error)
-	GetBalance(ctx context.Context, userId string) (*models.Balance, error)
-	NewWithdraw(ctx context.Context, userId string, newWithdraw models.NewWithdraw) error
-	GetWithdrawals(ctx context.Context, userId string) (models.Withdrawals, error)
+	NewOrder(ctx context.Context, orderID string) error
+	GetOrders(ctx context.Context, userID string) (models.Orders, error)
+	GetBalance(ctx context.Context, userID string) (*models.Balance, error)
+	NewWithdraw(ctx context.Context, userID string, newWithdraw models.NewWithdraw) error
+	GetWithdrawals(ctx context.Context, userID string) (models.Withdrawals, error)
 }
 
 type Service struct {

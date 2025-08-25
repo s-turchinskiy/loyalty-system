@@ -6,7 +6,7 @@ import (
 	"github.com/s-turchinskiy/loyalty-system/internal/models"
 )
 
-func (p *PostgreSQL) GetBalance(ctx context.Context, userId string) (*models.Balance, error) {
+func (p *PostgreSQL) GetBalance(ctx context.Context, userID string) (*models.Balance, error) {
 
 	request, err := getRequest("get_balance_withdraws.sql")
 	if err != nil {

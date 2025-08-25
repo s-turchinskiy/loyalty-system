@@ -23,7 +23,7 @@ func (h *Handler) GetBalance(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", ContentTypeApplicationJson)
+	w.Header().Set("Content-Type", ContentTypeApplicationJSON)
 	w.Write(rawBytes)
 
 }

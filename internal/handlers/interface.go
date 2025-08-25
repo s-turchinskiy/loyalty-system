@@ -15,7 +15,7 @@ const (
 	ContentTypeTextHTML         = "text/html; charset=utf-8"
 	ContentTypeTextPlain        = "text/plain"
 	ContentTypeTextPlainCharset = "text/plain; charset=utf-8"
-	ContentTypeApplicationJson  = "application/json"
+	ContentTypeApplicationJSON  = "application/json"
 
 	TextErrorGettingData = "error getting data"
 )
