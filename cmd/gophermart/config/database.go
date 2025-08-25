@@ -3,6 +3,8 @@ package config
 import (
 	"errors"
 	"fmt"
+	"github.com/s-turchinskiy/loyalty-system/internal/middleware/logger"
+	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"strings"
 )
@@ -31,6 +33,7 @@ func (d *database) String() string {
 
 func (d *database) Set(s string) error {
 
+	logger.Log.Debug(zap.String("database path", s))
 	s = strings.Replace(s, "://", " ", 1)
 	s = strings.Replace(s, ":", " ", 1)
 	s = strings.Replace(s, "@", " ", 1)
