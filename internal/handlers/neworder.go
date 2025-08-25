@@ -24,8 +24,8 @@ func (h *Handler) NewOrder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	context := r.Context()
-	orderId := string(responseData)
-	err = h.Service.NewOrder(context, orderId)
+	orderID := string(responseData)
+	err = h.Service.NewOrder(context, orderID)
 	if err != nil {
 		internalError(w, err)
 		return

@@ -14,7 +14,7 @@ type Settings struct {
 }
 
 func GetConfig() (*Settings, error) {
-	
+
 	config := &Settings{
 		Address: netAddress{
 			Host: "localhost", Port: 8080},
@@ -24,15 +24,15 @@ func GetConfig() (*Settings, error) {
 	flag.Var(&config.Database, "d", "path to database")
 	flag.Parse()
 
-	if envAddr := os.Getenv("ADDRESS"); envAddr != "" {
+	if envAddr := os.Getenv("RUN_ADDRESS"); envAddr != "" {
 		err := config.Address.Set(envAddr)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	if DatabaseDsn := os.Getenv("DATABASE_DSN"); DatabaseDsn != "" {
-		err := config.Database.Set(DatabaseDsn)
+	if value := os.Getenv("DATABASE_URI"); value != "" {
+		err := config.Database.Set(value)
 		if err != nil {
 			return nil, err
 		}
