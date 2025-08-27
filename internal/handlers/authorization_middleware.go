@@ -25,7 +25,19 @@ func (h *Handler) AuthorizationMiddleware(next http.Handler) http.Handler {
 
 		authorizationHeader := r.Header.Get("Authorization")
 		if authorizationHeader == "" {
-			logger.Log.Debugw(common.WrapError(fmt.Errorf("authorization header is empty")).Error())
+
+			var headers []string
+			for name, values := range r.Header {
+				for _, value := range values {
+					headers = append(headers, fmt.Sprintf("%s:%s", name, value))
+				}
+			}
+			
+			err := fmt.Errorf("authorization header is empty, url: %s, headers: %s",
+				r.RequestURI,
+				strings.Join(headers, "\n"))
+
+			logger.Log.Debugw(common.WrapError(err).Error())
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
