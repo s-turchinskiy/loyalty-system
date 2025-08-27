@@ -52,7 +52,7 @@ func errorGettingData(w http.ResponseWriter, err error) {
 }
 
 func internalError(w http.ResponseWriter, err error) {
-	logger.Log.Errorw("internal error", zap.Error(err))
+	logger.Log.Warnw("internal error", zap.Error(err))
 	w.Header().Set("Content-Type", ContentTypeTextPlainCharset)
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write([]byte(err.Error()))
