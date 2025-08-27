@@ -10,7 +10,7 @@ import (
 func (h *Handler) GetOrders(w http.ResponseWriter, r *http.Request) {
 
 	context := r.Context()
-	login := context.Value("login").(string)
+	login := context.Value(userLogin).(string)
 	orders, err := h.Service.GetOrders(context, login)
 	if err != nil {
 		internalError(w, err)

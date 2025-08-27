@@ -10,7 +10,7 @@ import (
 func (h *Handler) GetWithdrawals(w http.ResponseWriter, r *http.Request) {
 
 	context := r.Context()
-	login := context.Value("login").(string)
+	login := context.Value(userLogin).(string)
 	withdrawals, err := h.Service.GetWithdrawals(context, login)
 	if err != nil {
 		internalError(w, err)

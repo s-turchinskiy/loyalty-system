@@ -32,7 +32,7 @@ func (h *Handler) NewWithdraw(w http.ResponseWriter, r *http.Request) {
 	}
 
 	context := r.Context()
-	login := context.Value("login").(string)
+	login := context.Value(userLogin).(string)
 	err := h.Service.NewWithdraw(context, login, req)
 
 	switch {

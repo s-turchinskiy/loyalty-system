@@ -9,6 +9,12 @@ import (
 	"strings"
 )
 
+type login string
+
+const (
+	userLogin login = "login"
+)
+
 func (h *Handler) AuthorizationMiddleware(next http.Handler) http.Handler {
 	authorizationFn := func(w http.ResponseWriter, r *http.Request) {
 
@@ -34,7 +40,7 @@ func (h *Handler) AuthorizationMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		ctx = context.WithValue(ctx, "login", login)
+		ctx = context.WithValue(ctx, userLogin, login)
 		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r)
 	}
