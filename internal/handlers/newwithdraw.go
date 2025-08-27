@@ -32,7 +32,8 @@ func (h *Handler) NewWithdraw(w http.ResponseWriter, r *http.Request) {
 	}
 
 	context := r.Context()
-	err := h.Service.NewWithdraw(context, "", req)
+	login := context.Value("login").(string)
+	err := h.Service.NewWithdraw(context, login, req)
 
 	switch {
 	case errors.Is(err, servicecommon.ErrorNotEnoughBalance):

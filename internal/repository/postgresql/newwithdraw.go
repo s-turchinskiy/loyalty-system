@@ -8,7 +8,7 @@ import (
 	"github.com/s-turchinskiy/loyalty-system/internal/servicecommon"
 )
 
-func (p *PostgreSQL) NewWithdraw(ctx context.Context, userID string, newWithdraw models.NewWithdraw) error {
+func (p *PostgreSQL) NewWithdraw(ctx context.Context, login string, newWithdraw models.NewWithdraw) error {
 
 	requestSelect, err := getRequest("get_balance.sql")
 	if err != nil {
@@ -26,7 +26,7 @@ func (p *PostgreSQL) NewWithdraw(ctx context.Context, userID string, newWithdraw
 	}
 
 	var balance float64
-	row := tx.QueryRowContext(ctx, requestSelect)
+	row := tx.QueryRowContext(ctx, requestSelect, login)
 	err = row.Scan(&balance)
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
@@ -41,7 +41,7 @@ func (p *PostgreSQL) NewWithdraw(ctx context.Context, userID string, newWithdraw
 		return servicecommon.ErrorNotEnoughBalance
 	}
 
-	_, err = tx.Exec(requestInsert, newWithdraw.Order, -1*newWithdraw.Sum)
+	_, err = tx.Exec(requestInsert, newWithdraw.Order, -1*newWithdraw.Sum, login)
 	if err != nil {
 		tx.Rollback()
 		return err

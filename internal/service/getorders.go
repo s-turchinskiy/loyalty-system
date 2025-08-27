@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func (s *Service) GetOrders(ctx context.Context, userID string) (models.Orders, error) {
+func (s *Service) GetOrders(ctx context.Context, login string) (models.Orders, error) {
 
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -14,7 +14,7 @@ func (s *Service) GetOrders(ctx context.Context, userID string) (models.Orders, 
 
 	for _, delay := range s.retryStrategy {
 		time.Sleep(delay)
-		orders, err := s.Repository.GetOrders(ctx, userID)
+		orders, err := s.Repository.GetOrders(ctx, login)
 		if err == nil {
 			return orders, nil
 		} else if !IsConnectionError(err) {

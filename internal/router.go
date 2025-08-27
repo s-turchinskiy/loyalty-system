@@ -10,6 +10,7 @@ func Router(h *handlers.Handler) chi.Router {
 
 	router := chi.NewRouter()
 	router.Use(logger.Logger)
+	router.Use(h.AuthorizationMiddleware)
 	//router.Use(gzip.GzipMiddleware)
 	router.Route("/api/user", func(r chi.Router) {
 		r.Post("/register", h.Register)

@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func (s *Service) GetBalance(ctx context.Context, userID string) (*models.Balance, error) {
+func (s *Service) GetBalance(ctx context.Context, login string) (*models.Balance, error) {
 
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -14,7 +14,7 @@ func (s *Service) GetBalance(ctx context.Context, userID string) (*models.Balanc
 
 	for _, delay := range s.retryStrategy {
 		time.Sleep(delay)
-		result, err := s.Repository.GetBalance(ctx, "")
+		result, err := s.Repository.GetBalance(ctx, login)
 		if err == nil {
 			return result, nil
 		} else if !IsConnectionError(err) {

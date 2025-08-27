@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func (s *Service) GetWithdrawals(ctx context.Context, userID string) (models.Withdrawals, error) {
+func (s *Service) GetWithdrawals(ctx context.Context, login string) (models.Withdrawals, error) {
 
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -14,7 +14,7 @@ func (s *Service) GetWithdrawals(ctx context.Context, userID string) (models.Wit
 
 	for _, delay := range s.retryStrategy {
 		time.Sleep(delay)
-		result, err := s.Repository.GetWithdrawals(ctx, userID)
+		result, err := s.Repository.GetWithdrawals(ctx, login)
 		if err == nil {
 			return result, nil
 		} else if !IsConnectionError(err) {

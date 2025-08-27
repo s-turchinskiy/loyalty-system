@@ -6,7 +6,7 @@ import (
 	"github.com/s-turchinskiy/loyalty-system/internal/models"
 )
 
-func (p *PostgreSQL) GetOrders(ctx context.Context, userID string) ([]models.Order, error) {
+func (p *PostgreSQL) GetOrders(ctx context.Context, login string) ([]models.Order, error) {
 
 	request, err := getRequest("get_orders.sql")
 	if err != nil {
@@ -14,7 +14,7 @@ func (p *PostgreSQL) GetOrders(ctx context.Context, userID string) ([]models.Ord
 	}
 
 	var result []models.Order
-	err = p.db.SelectContext(ctx, &result, request)
+	err = p.db.SelectContext(ctx, &result, request, login)
 
 	if err != nil {
 		return nil, common.WrapError(err)

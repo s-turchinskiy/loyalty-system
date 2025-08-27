@@ -8,5 +8,6 @@ SELECT
         orderstatuses.status_id = statuses.id
     left join loyaltysystem.balances as balances ON
         orderstatuses.order_id = balances.order_id
+where orderstatuses.user_id = (select id from loyaltysystem.users where login = $1)
 order by
     orderstatuses.uploaded_at desc
