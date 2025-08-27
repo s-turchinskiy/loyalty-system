@@ -1,6 +1,13 @@
 package models
 
+import "github.com/golang-jwt/jwt/v4"
+
 //go:generate easyjson models.go
+
+type NewUser struct {
+	Login    string
+	Password string
+}
 
 type Order struct {
 	Number     string  `db:"number" json:"number"`
@@ -31,3 +38,8 @@ type Withdrawal struct {
 
 //easyjson:json
 type Withdrawals []Withdrawal
+
+type Claims struct {
+	jwt.RegisteredClaims
+	Login string
+}

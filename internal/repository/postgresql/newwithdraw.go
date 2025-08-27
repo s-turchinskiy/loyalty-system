@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"github.com/s-turchinskiy/loyalty-system/internal/common"
 	"github.com/s-turchinskiy/loyalty-system/internal/models"
+	"github.com/s-turchinskiy/loyalty-system/internal/servicecommon"
 )
 
 func (p *PostgreSQL) NewWithdraw(ctx context.Context, userID string, newWithdraw models.NewWithdraw) error {
@@ -31,14 +31,14 @@ func (p *PostgreSQL) NewWithdraw(ctx context.Context, userID string, newWithdraw
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
 		tx.Rollback()
-		return common.ErrorNotEnoughBalance
+		return servicecommon.ErrorNotEnoughBalance
 	case err != nil:
 		tx.Rollback()
 		return err
 	}
 
 	if balance < newWithdraw.Sum {
-		return common.ErrorNotEnoughBalance
+		return servicecommon.ErrorNotEnoughBalance
 	}
 
 	_, err = tx.Exec(requestInsert, newWithdraw.Order, -1*newWithdraw.Sum)

@@ -10,6 +10,7 @@ import (
 	"go.uber.org/zap"
 	"log"
 	"net/http"
+	"time"
 )
 
 func init() {
@@ -34,7 +35,11 @@ func main() {
 	}
 
 	ctx := context.Background()
-	handler := handlers.NewHandler(ctx, config.Database.String(), config.Database.DBName)
+	handler := handlers.NewHandler(
+		ctx,
+		config.Database.String(),
+		config.Database.DBName,
+		time.Minute*60)
 	errors := make(chan error)
 
 	go func() {

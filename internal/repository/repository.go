@@ -7,6 +7,7 @@ import (
 
 type Repository interface {
 	Ping(ctx context.Context) ([]byte, error)
+	NewUser(ctx context.Context, login, hash string) error
 	NewOrder(ctx context.Context, orderID string) error
 	GetOrders(ctx context.Context, userID string) ([]models.Order, error)
 	GetBalance(ctx context.Context, userID string) (*models.Balance, error)

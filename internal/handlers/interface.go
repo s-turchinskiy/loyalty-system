@@ -21,10 +21,11 @@ const (
 )
 
 type Handler struct {
-	Service service.Updater
+	Service  service.Updater
+	tokenExp time.Duration
 }
 
-func NewHandler(ctx context.Context, addr, schemaName string) *Handler {
+func NewHandler(ctx context.Context, addr, schemaName string, tokenExp time.Duration) *Handler {
 
 	p, err := postgresql.NewPostgresStorage(ctx, addr, schemaName)
 	if err != nil {
@@ -38,8 +39,9 @@ func NewHandler(ctx context.Context, addr, schemaName string) *Handler {
 		5 * time.Second}
 
 	return &Handler{
-
-		Service: service.New(p, retryStrategy)}
+		Service:  service.New(p, retryStrategy),
+		tokenExp: tokenExp,
+	}
 }
 
 func errorGettingData(w http.ResponseWriter, err error) {

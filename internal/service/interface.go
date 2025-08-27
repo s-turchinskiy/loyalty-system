@@ -12,6 +12,7 @@ import (
 )
 
 type Updater interface {
+	Register(ctx context.Context, newUser models.NewUser) (hashPassword string, err error)
 	NewOrder(ctx context.Context, orderID string) error
 	GetOrders(ctx context.Context, userID string) (models.Orders, error)
 	GetBalance(ctx context.Context, userID string) (*models.Balance, error)

@@ -3,15 +3,25 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/s-turchinskiy/loyalty-system/internal/common"
 	"github.com/s-turchinskiy/loyalty-system/internal/middleware/logger"
 	"github.com/s-turchinskiy/loyalty-system/internal/models"
+	"github.com/s-turchinskiy/loyalty-system/internal/servicecommon"
 	"go.uber.org/zap"
 	"io"
 	"net/http"
+	"strings"
 )
 
 func (h *Handler) NewWithdraw(w http.ResponseWriter, r *http.Request) {
+
+	if !strings.Contains(r.Header.Get("Content-Type"), ContentTypeApplicationJSON) {
+
+		err := fmt.Errorf("Content-Type != %s", ContentTypeApplicationJSON)
+		errorGettingData(w, err)
+		return
+	}
 
 	var req models.NewWithdraw
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -25,11 +35,11 @@ func (h *Handler) NewWithdraw(w http.ResponseWriter, r *http.Request) {
 	err := h.Service.NewWithdraw(context, "", req)
 
 	switch {
-	case errors.Is(err, common.ErrorNotEnoughBalance):
+	case errors.Is(err, servicecommon.ErrorNotEnoughBalance):
 		logger.Log.Info(zap.Error(err))
 		w.WriteHeader(http.StatusPaymentRequired)
 
-	case common.IsErrorDuplicateKeyValue(err):
+	case servicecommon.IsErrorDuplicateKeyValue(err):
 		logger.Log.Info(zap.Error(err))
 		w.WriteHeader(http.StatusUnprocessableEntity)
 
