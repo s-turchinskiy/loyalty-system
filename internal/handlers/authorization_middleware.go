@@ -38,7 +38,7 @@ func (h *Handler) AuthorizationMiddleware(next http.Handler) http.Handler {
 				r.RequestURI,
 				strings.Join(headers, "\n"))
 
-			logger.Log.Debug(zap.Error(common.WrapError(err)))
+			logger.Log.Debug("authorization header is empty", zap.Error(common.WrapError(err)))
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
