@@ -4,7 +4,7 @@ import "github.com/golang-jwt/jwt/v4"
 
 //go:generate easyjson models.go
 
-type NewUser struct {
+type User struct {
 	Login    string
 	Password string
 }

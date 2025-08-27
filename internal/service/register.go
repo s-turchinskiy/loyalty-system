@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (s *Service) Register(ctx context.Context, newUser models.NewUser) (hashPassword string, err error) {
+func (s *Service) Register(ctx context.Context, newUser models.User) (hashPassword string, err error) {
 
 	s.mutex.Lock()
 	defer s.mutex.Unlock()

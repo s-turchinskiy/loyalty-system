@@ -39,7 +39,7 @@ func main() {
 		ctx,
 		config.Database.String(),
 		config.Database.DBName,
-		time.Minute*60)
+		time.Hour*1000)
 	errors := make(chan error)
 
 	go func() {

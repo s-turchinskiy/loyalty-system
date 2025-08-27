@@ -22,7 +22,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req models.NewUser
+	var req models.User
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 
 		loggingCannotDecodeRequestJSONBody(r.Body)
@@ -49,4 +49,5 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Authorization", "Bearer "+token)
+
 }
