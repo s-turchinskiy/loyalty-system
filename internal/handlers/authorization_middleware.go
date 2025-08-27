@@ -18,6 +18,11 @@ const (
 func (h *Handler) AuthorizationMiddleware(next http.Handler) http.Handler {
 	authorizationFn := func(w http.ResponseWriter, r *http.Request) {
 
+		if r.RequestURI == "/api/user/register" || r.RequestURI == "/api/user/login" {
+			next.ServeHTTP(w, r)
+			return
+		}
+
 		authorizationHeader := r.Header.Get("Authorization")
 		if authorizationHeader == "" {
 			logger.Log.Debugw(common.WrapError(fmt.Errorf("authorization header is empty")).Error())
