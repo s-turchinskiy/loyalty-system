@@ -7,20 +7,20 @@ import (
 
 var ErrUserAlreadyExist = errors.New("user already exist")
 
-type TypeErrorUserAlreadyExist struct {
+type ErrorUserAlreadyExist struct {
 	login string
 }
 
-func (e *TypeErrorUserAlreadyExist) Error() string {
+func (e *ErrorUserAlreadyExist) Error() string {
 	return fmt.Sprintf("user \"%v\" already exist", e.login)
 }
 
-func (te *TypeErrorUserAlreadyExist) Unwrap() error {
+func (e *ErrorUserAlreadyExist) Unwrap() error {
 	return ErrUserAlreadyExist
 }
 
 func NewErrorUserAlreadyExist(login string) error {
-	return &TypeErrorUserAlreadyExist{
+	return &ErrorUserAlreadyExist{
 		login: login,
 	}
 }
