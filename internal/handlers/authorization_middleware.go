@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/s-turchinskiy/loyalty-system/internal/common"
 	"github.com/s-turchinskiy/loyalty-system/internal/middleware/logger"
+	"go.uber.org/zap"
 	"net/http"
 	"strings"
 )
@@ -32,12 +33,12 @@ func (h *Handler) AuthorizationMiddleware(next http.Handler) http.Handler {
 					headers = append(headers, fmt.Sprintf("%s:%s", name, value))
 				}
 			}
-			
+
 			err := fmt.Errorf("authorization header is empty, url: %s, headers: %s",
 				r.RequestURI,
 				strings.Join(headers, "\n"))
 
-			logger.Log.Debugw(common.WrapError(err).Error())
+			logger.Log.Debug(zap.Error(common.WrapError(err)))
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
