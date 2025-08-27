@@ -3,6 +3,7 @@ module github.com/s-turchinskiy/loyalty-system
 go 1.24.5
 
 require (
+	github.com/ShiraazMoollatjie/goluhn v0.0.0-20211017190329-0d86158c056a
 	github.com/go-chi/chi/v5 v5.2.2
 	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/golang-migrate/migrate/v4 v4.18.3
@@ -12,6 +13,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/mailru/easyjson v0.9.0
 	go.uber.org/zap v1.27.0
+	golang.org/x/crypto v0.37.0
 )
 
 require (
@@ -24,7 +26,6 @@ require (
 	github.com/lib/pq v1.10.9 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
-	golang.org/x/crypto v0.37.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
 )

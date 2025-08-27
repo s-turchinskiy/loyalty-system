@@ -36,7 +36,7 @@ func (h *Handler) NewWithdraw(w http.ResponseWriter, r *http.Request) {
 	err := h.Service.NewWithdraw(context, login, req)
 
 	switch {
-	case errors.Is(err, servicecommon.ErrorNotEnoughBalance):
+	case errors.Is(err, servicecommon.ErrNotEnoughBalance):
 		logger.Log.Info(zap.Error(err))
 		w.WriteHeader(http.StatusPaymentRequired)
 

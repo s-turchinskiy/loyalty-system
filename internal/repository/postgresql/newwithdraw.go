@@ -31,14 +31,14 @@ func (p *PostgreSQL) NewWithdraw(ctx context.Context, login string, newWithdraw 
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
 		tx.Rollback()
-		return servicecommon.ErrorNotEnoughBalance
+		return servicecommon.ErrNotEnoughBalance
 	case err != nil:
 		tx.Rollback()
 		return err
 	}
 
 	if balance < newWithdraw.Sum {
-		return servicecommon.ErrorNotEnoughBalance
+		return servicecommon.ErrNotEnoughBalance
 	}
 
 	_, err = tx.Exec(requestInsert, newWithdraw.Order, -1*newWithdraw.Sum, login)

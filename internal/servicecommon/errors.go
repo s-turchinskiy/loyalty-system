@@ -7,7 +7,12 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 )
 
-var ErrorNotEnoughBalance = fmt.Errorf("not enough balance")
+var (
+	ErrNotEnoughBalance                        = fmt.Errorf("not enough balance")
+	ErrNoLuhnValidate                          = fmt.Errorf("order number no luhn validate")
+	ErrOrderNumberAlreadyUploadedByThisUser    = fmt.Errorf("order number already uploaded by this user")
+	ErrOrderNumberAlreadyUploadedByAnotherUser = fmt.Errorf("order number already uploaded by another user")
+)
 
 func IsErrorDuplicateKeyValue(err error) bool {
 
