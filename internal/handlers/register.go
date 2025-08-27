@@ -44,5 +44,9 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token, err := authservice.BuildJWTString(req.Login, hashPassword, h.tokenExp)
+	if err != nil {
+		internalError(w, err)
+		return
+	}
 	w.Header().Set("Authorization", "Bearer "+token)
 }
