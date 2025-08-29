@@ -39,7 +39,7 @@ func easyjsonBafe5d40DecodeGithubComSTurchinskiyLoyaltySystemInternalModels(in *
 		case "order":
 			out.Order = string(in.String())
 		case "status":
-			out.Status = AccrualStatus(in.Int())
+			out.Status = string(in.String())
 		case "accrual":
 			out.Accrual = float64(in.Float64())
 		default:
@@ -64,7 +64,7 @@ func easyjsonBafe5d40EncodeGithubComSTurchinskiyLoyaltySystemInternalModels(out 
 	{
 		const prefix string = ",\"status\":"
 		out.RawString(prefix)
-		out.Int(int(in.Status))
+		out.String(string(in.Status))
 	}
 	if in.Accrual != 0 {
 		const prefix string = ",\"accrual\":"

@@ -46,8 +46,7 @@ func (r *HTTPResty) GetAccrual(numberOrder string) (result *models.AccrualData, 
 		return nil, err
 	}
 
-	logger.Log.Debugln(zap.String("body", string(resp.Body())))
-	
+	result = &models.AccrualData{}
 	err = easyjson.Unmarshal(resp.Body(), result)
 	if err != nil {
 		logger.Log.Info("error encoding response", zap.Error(err))

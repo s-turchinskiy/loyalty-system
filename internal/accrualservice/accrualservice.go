@@ -161,12 +161,12 @@ func (a *AccrualService) resultHandling() {
 			}
 
 			oldStatus := result.order.CurrentStatus
-			newStatus := result.accrual.Status.AsString()
+			newStatus := result.accrual.Status
 			if oldStatus == newStatus {
 				continue
 			}
 
-			if result.accrual.Status == models.PROCESSED {
+			if newStatus == "PROCESSED" {
 				err := a.repository.UpdateOrderStatusAndNewRefill(
 					a.ctx,
 					result.order.OrderID,
