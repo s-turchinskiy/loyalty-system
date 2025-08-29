@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS loyaltysystem.statuses (
 );
 
 INSERT INTO loyaltysystem.statuses (status) VALUES ('NEW');
+INSERT INTO loyaltysystem.statuses (status) VALUES ('REGISTERED');
 INSERT INTO loyaltysystem.statuses (status) VALUES ('PROCESSING');
 INSERT INTO loyaltysystem.statuses (status) VALUES ('INVALID');
 INSERT INTO loyaltysystem.statuses (status) VALUES ('PROCESSED');

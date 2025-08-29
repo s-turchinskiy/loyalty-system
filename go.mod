@@ -5,6 +5,7 @@ go 1.24.5
 require (
 	github.com/ShiraazMoollatjie/goluhn v0.0.0-20211017190329-0d86158c056a
 	github.com/go-chi/chi/v5 v5.2.2
+	github.com/go-resty/resty/v2 v2.16.5
 	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/jackc/pgerrcode v0.0.0-20220416144525-469b46aa5efa
@@ -26,6 +27,7 @@ require (
 	github.com/lib/pq v1.10.9 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
+	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
 )

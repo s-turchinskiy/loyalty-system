@@ -15,4 +15,7 @@ type Repository interface {
 	GetBalance(ctx context.Context, login string) (*models.Balance, error)
 	NewWithdraw(ctx context.Context, login string, newWithdraw models.NewWithdraw) error
 	GetWithdrawals(ctx context.Context, login string) ([]models.Withdrawal, error)
+	GetOrdersForAccrualCalculation(ctx context.Context) (result []models.OrdersForAccrualCalculation, err error)
+	UpdateOrderStatus(ctx context.Context, orderID, newStatus string) error
+	UpdateOrderStatusAndNewRefill(ctx context.Context, orderID, newStatus string, sum float64, userID uint) error
 }

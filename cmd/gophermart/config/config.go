@@ -9,8 +9,9 @@ import (
 )
 
 type Settings struct {
-	Address  netAddress
-	Database database
+	Address       netAddress
+	Database      database
+	AccrualSystem string
 }
 
 func GetConfig() (*Settings, error) {
@@ -22,6 +23,7 @@ func GetConfig() (*Settings, error) {
 
 	flag.Var(&config.Address, "a", "Net address host:port")
 	flag.Var(&config.Database, "d", "path to database")
+	flag.StringVar(&config.AccrualSystem, "r", "", "address of the accrual calculation system")
 	flag.Parse()
 
 	if envAddr := os.Getenv("RUN_ADDRESS"); envAddr != "" {
@@ -36,6 +38,10 @@ func GetConfig() (*Settings, error) {
 		if err != nil {
 			return nil, err
 		}
+	}
+
+	if value := os.Getenv("ACCRUAL_SYSTEM_ADDRESS"); value != "" {
+		config.AccrualSystem = value
 	}
 
 	logger.LogNoSugar.Info("Config", zap.Inline(config))
