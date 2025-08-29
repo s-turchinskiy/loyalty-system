@@ -113,8 +113,6 @@ func (a *AccrualService) generator(doneCh chan struct{}, input []models.OrdersFo
 
 func (a *AccrualService) workerSender() {
 
-	var accrual *models.AccrualData
-	var err error
 	for order := range a.jobs {
 
 		select {
@@ -122,19 +120,30 @@ func (a *AccrualService) workerSender() {
 			return
 		default:
 
-			for _, delay := range a.retryStrategy {
-				time.Sleep(delay)
-				accrual, err = a.accrualGetter.GetAccrual(order.OrderID)
-				if err == nil {
-					a.results <- result{order, accrual, nil}
-				} else if !service.IsConnectionError(err) {
-					a.results <- result{order, nil, err}
-				}
-			}
-
-			a.results <- result{order, nil, err}
+			a.sendResult(order)
 		}
 	}
+}
+
+func (a *AccrualService) sendResult(order models.OrdersForAccrualCalculation) {
+
+	var accrual *models.AccrualData
+	var err error
+
+	for _, delay := range a.retryStrategy {
+		time.Sleep(delay)
+		accrual, err = a.accrualGetter.GetAccrual(order.OrderID)
+		if err == nil {
+			a.results <- result{order, accrual, nil}
+			return
+		} else if !service.IsConnectionError(err) {
+			a.results <- result{order, nil, err}
+			return
+		}
+	}
+
+	a.results <- result{order, nil, err}
+
 }
 
 func (a *AccrualService) resultHandling() {
@@ -165,7 +174,7 @@ func (a *AccrualService) resultHandling() {
 					result.accrual.Accrual,
 					result.order.UserID,
 				)
-				
+
 				if err != nil {
 					errs = append(errs, fmt.Errorf("%v %w", result, err))
 				}

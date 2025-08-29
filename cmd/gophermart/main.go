@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/s-turchinskiy/loyalty-system/cmd/gophermart/config"
 	"github.com/s-turchinskiy/loyalty-system/internal"
@@ -12,7 +13,6 @@ import (
 	"go.uber.org/zap"
 	"log"
 	"net/http"
-	"path"
 	"runtime"
 	"time"
 )
@@ -77,7 +77,7 @@ func main() {
 		repository,
 		retryStrategy,
 		time.Duration(2)*time.Second,
-		accrualservice.NewHTTPResty(path.Join(config.AccrualSystem, "/api/orders/{number}")),
+		accrualservice.NewHTTPResty(fmt.Sprintf("%s/api/orders/{number}", config.AccrualSystem)),
 		runtime.NumCPU(),
 		errorsCh,
 		doneCh)
